@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+**/node_modules/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Archivos temporales
+*.log
+npm-debug.log*
+tmp/
+temp/
+
+# Resultados de pruebas
+coverage/
+playwright-report/
+test-results/
+
+# Compilaciones
+dist/
+build/
+
+# Archivos del sistema
+Thumbs.db
+Desktop.ini
