@@ -1,0 +1,11 @@
+El primer intento de Snyk pidió autenticación y terminó con código 2.
+Después la cuenta quedó autenticada. Los análisis válidos son:
+
+- evidencias-laboratorio5/logs/snyk-inicial.txt
+- evidencias-laboratorio5/snyk-inicial.json
+- evidencias-laboratorio5/evidencia-05-snyk-inicial.jpg
+- evidencias-laboratorio5/logs/snyk-despues-actualizacion.txt
+- evidencias-laboratorio5/snyk-despues-actualizacion.json
+- evidencias-laboratorio5/logs/snyk-final.txt
+- evidencias-laboratorio5/snyk-final.json
+- evidencias-laboratorio5/evidencia-06-snyk-final.jpg

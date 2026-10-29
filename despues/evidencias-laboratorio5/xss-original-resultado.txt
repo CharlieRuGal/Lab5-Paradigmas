@@ -1,0 +1,5 @@
+servidor: antes/server.js
+puerto: 4181
+dialogs: ["XSS original"]
+banner: XSS ejecutado en la version original. El navegador mostro alert: XSS original
+captura: C:\Lab5-Paradigmas\despues\evidencias-laboratorio5\evidencia-01-xss-original.jpg

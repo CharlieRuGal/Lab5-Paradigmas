@@ -1,0 +1,1895 @@
+{
+  "vulnerabilities": [
+    {
+      "id": "SNYK-JS-PROXYADDR-19812342",
+      "title": "User Impersonation",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+      "credit": [
+        "kagebunsher"
+      ],
+      "semver": {
+        "vulnerable": [
+          ">=1.1.0 <2.0.8"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "2.0.8"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "critical",
+      "cvssScore": 9.3,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "proxy-addr",
+      "references": [
+        {
+          "url": "https://github.com/jshttp/proxy-addr/security/advisories/GHSA-jqcg-44mw-7w3h",
+          "title": "GitHub Advisory"
+        },
+        {
+          "url": "https://github.com/jshttp/proxy-addr/commit/780911d84d18e2c5fa008ed0c0d387631ec11965",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-10-08T05:38:39.078594Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "critical",
+          "baseScore": 9.3,
+          "cvssVersion": "4.0",
+          "modificationTime": "2026-10-22T14:06:13.144148Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "assigner": "Snyk",
+          "severity": "critical",
+          "baseScore": 9.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-22T14:06:13.144148Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-08T05:38:39.078594Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to User Impersonation in its subnet matching logic, where an IPv4-mapped IPv6 trust entry with a short prefix such as `::ffff:10.0.0.0/8` compiles with all-zero leading bits and matches every address rather than the intended block. An attacker can control the value returned by `proxyaddr(req, trust)`, and therefore `req.ip` and `req.ips` in Express, by sending an arbitrary `X-Forwarded-For` header, since every client is then trusted as a proxy at hop 0, which defeats IP-based access control, rate limiting, geolocation, and audit logging. This requires the application to configure its trust list with an IPv4-mapped IPv6 subnet using a short prefix, or any IPv6 subnet with zero leading bits such as `::/1`, and the misconfiguration compiles without error.\r\n\r\n## Workaround\r\n\r\nThis vulnerability can be avoided by expressing trust subnets in plain IPv4 notation, such as `10.0.0.0/8`, or where IPv4-mapped IPv6 notation is required, by using a prefix long enough to cover the mapped marker, such as `::ffff:10.0.0.0/104`.\n## Remediation\nUpgrade `proxy-addr` to version 2.0.8 or higher.\n## References\n- [GitHub Advisory](https://github.com/jshttp/proxy-addr/security/advisories/GHSA-jqcg-44mw-7w3h)\n- [GitHub Commit](https://github.com/jshttp/proxy-addr/commit/780911d84d18e2c5fa008ed0c0d387631ec11965)\n",
+      "epssDetails": {
+        "percentile": "0.16684",
+        "probability": "0.00260",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2026-90711"
+        ],
+        "CWE": [
+          "CWE-290"
+        ],
+        "GHSA": [
+          "GHSA-jqcg-44mw-7w3h"
+        ]
+      },
+      "packageName": "proxy-addr",
+      "proprietary": false,
+      "creationTime": "2026-09-15T08:22:56.328403Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2026-09-15T07:14:51Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2026-09-15T08:22:56.519310Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-10-22T14:06:13.144148Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "critical",
+      "from": [
+        "package.json@*",
+        "express@4.22.3",
+        "proxy-addr@2.0.7"
+      ],
+      "upgradePath": [
+        false,
+        "express@4.22.3",
+        "proxy-addr@2.0.8"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "proxy-addr",
+      "version": "2.0.7"
+    },
+    {
+      "id": "SNYK-JS-SOCKETIOPARSER-15680278",
+      "title": "Allocation of Resources Without Limits or Throttling",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "credit": [
+        "darrachequesne"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<3.3.5",
+          ">=3.4.0 <3.4.4",
+          ">=4.0.0 <4.2.6"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.3.5",
+        "3.4.4",
+        "4.2.6"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "socket.io-parser",
+      "references": [
+        {
+          "url": "https://github.com/socketio/socket.io/commit/719f9ebab0772ffb882bd614b387e585c1aa75d4",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/socketio/socket.io/commit/b25738c416c4e32fbff62ee182afa8f6d0dacf78",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-04-15T01:13:54.237313Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2026-10-25T14:08:25.475580Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-25T14:08:25.475580Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-04-15T01:13:54.237313Z"
+        }
+      ],
+      "description": "## Overview\n[socket.io-parser](https://www.npmjs.org/package/socket.io-parser) is a socket.io protocol parser\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `Decoder` class, which accepts an unlimited number of binary attachments. An attacker can exploit this to exhaust server memory.\n## Remediation\nUpgrade `socket.io-parser` to version 3.3.5, 3.4.4, 4.2.6 or higher.\n## References\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/719f9ebab0772ffb882bd614b387e585c1aa75d4)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/b25738c416c4e32fbff62ee182afa8f6d0dacf78)\n",
+      "epssDetails": {
+        "percentile": "0.44086",
+        "probability": "0.00523",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2026-33151"
+        ],
+        "CWE": [
+          "CWE-754",
+          "CWE-770"
+        ],
+        "GHSA": [
+          "GHSA-677m-j7p3-52f9"
+        ]
+      },
+      "packageName": "socket.io-parser",
+      "proprietary": false,
+      "creationTime": "2026-03-18T11:01:53.077684Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2026-03-17T15:05:14Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2026-03-18T11:01:53.366840Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-10-25T14:08:25.475580Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "package.json@*",
+        "socket.io@4.8.0",
+        "socket.io-parser@4.2.4"
+      ],
+      "upgradePath": [
+        false,
+        "socket.io@4.8.0",
+        "socket.io-parser@4.2.7"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "socket.io-parser",
+      "version": "4.2.4"
+    },
+    {
+      "id": "SNYK-JS-SOCKETIOPARSER-18517008",
+      "title": "Improper Check for Unusual or Exceptional Conditions",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "credit": [
+        "aretekzs",
+        "mauriceng98",
+        "Wesley Wang",
+        "Strickland",
+        "七号公园"
+      ],
+      "semver": {
+        "vulnerable": [
+          "<3.3.6",
+          ">=3.4.0 <3.4.5",
+          ">=4.0.0 <4.2.7"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.3.6",
+        "3.4.5",
+        "4.2.7"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "socket.io-parser",
+      "references": [
+        {
+          "url": "https://github.com/socketio/socket.io/security/advisories/GHSA-2m8v-j782-fhvr",
+          "title": "GitHub Advisory"
+        },
+        {
+          "url": "https://github.com/socketio/socket.io/commit/7c6ef571a00656718e9e05e3b948fd1758b2a7b4",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/socketio/socket.io/commit/9c6323e5cde41bd75df3379b5fc9293664a5f240",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/socketio/socket.io/commit/ced94ffa3ac020a8f3c14eb98a3bf34acb14d291",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-08-07T05:47:51.938464Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2026-09-24T14:24:18.699464Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-09-24T14:24:18.699464Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-08-07T05:47:51.938464Z"
+        }
+      ],
+      "description": "## Overview\n[socket.io-parser](https://www.npmjs.org/package/socket.io-parser) is a socket.io protocol parser\n\nAffected versions of this package are vulnerable to Improper Check for Unusual or Exceptional Conditions via attachment handling. An attacker can cause the server to exhaust memory resources by sending specially crafted packets that make the server wait for and buffer a large number of binary attachments.\n## Remediation\nUpgrade `socket.io-parser` to version 3.3.6, 3.4.5, 4.2.7 or higher.\n## References\n- [GitHub Advisory](https://github.com/socketio/socket.io/security/advisories/GHSA-2m8v-j782-fhvr)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/7c6ef571a00656718e9e05e3b948fd1758b2a7b4)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/9c6323e5cde41bd75df3379b5fc9293664a5f240)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/ced94ffa3ac020a8f3c14eb98a3bf34acb14d291)\n",
+      "epssDetails": {
+        "percentile": "0.47911",
+        "probability": "0.00630",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2026-69185"
+        ],
+        "CWE": [
+          "CWE-754"
+        ],
+        "GHSA": [
+          "GHSA-2m8v-j782-fhvr"
+        ]
+      },
+      "packageName": "socket.io-parser",
+      "proprietary": false,
+      "creationTime": "2026-08-04T14:52:18.456055Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2026-08-03T19:09:44Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2026-08-04T14:52:18.662459Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-09-24T14:24:18.699464Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "package.json@*",
+        "socket.io@4.8.0",
+        "socket.io-parser@4.2.4"
+      ],
+      "upgradePath": [
+        false,
+        "socket.io@4.8.0",
+        "socket.io-parser@4.2.7"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "socket.io-parser",
+      "version": "4.2.4"
+    },
+    {
+      "id": "SNYK-JS-WS-16722635",
+      "title": "Use of Uninitialized Resource",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N/E:P",
+      "credit": [
+        "Nikita Skovoroda"
+      ],
+      "semver": {
+        "vulnerable": [
+          ">=8.0.0 <8.20.1"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "8.20.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "medium",
+      "cvssScore": 6.9,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "ws",
+      "references": [
+        {
+          "url": "https://github.com/websockets/ws/security/advisories/GHSA-58qx-3vcg-4xpx",
+          "title": "GitHub Advisory"
+        },
+        {
+          "url": "https://github.com/websockets/ws/commit/c0327ec15a54d701eb6ccefaa8bef328cfc03086",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-05-20T01:20:41.228574Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-06-19T05:48:20.686423Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.9,
+          "cvssVersion": "4.0",
+          "modificationTime": "2026-10-25T14:12:17.221496Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 4.9,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-25T14:12:17.221496Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-05-20T01:20:41.228574Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-06-19T05:48:20.686423Z"
+        }
+      ],
+      "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Use of Uninitialized Resource in the `websocket.close()` implementation in the `Sender` class, which exposes uninitialized memory when a `TypedArray` is provided as the `reason` argument.\r\n\r\n**Note:** The project maintainers note that this \"flaw is only exploitable through misuse that is unlikely in practice\".\n## PoC\n```js\r\nimport { deepStrictEqual } from 'node:assert';\r\nimport { WebSocket, WebSocketServer } from 'ws';\r\n\r\nconst wss = new WebSocketServer(\r\n  { port: 0, skipUTF8Validation: true },\r\n  function () {\r\n    const { port } = wss.address();\r\n    const ws = new WebSocket(`ws://localhost:${port}`, {\r\n      skipUTF8Validation: true\r\n    });\r\n\r\n    ws.on('close', function (code, reason) {\r\n      deepStrictEqual(reason, Buffer.alloc(80));\r\n    });\r\n  }\r\n);\r\n\r\nwss.on('connection', function (ws) {\r\n  ws.close(1000, new Float32Array(20));\r\n});\r\n```\n## Remediation\nUpgrade `ws` to version 8.20.1 or higher.\n## References\n- [GitHub Advisory](https://github.com/websockets/ws/security/advisories/GHSA-58qx-3vcg-4xpx)\n- [GitHub Commit](https://github.com/websockets/ws/commit/c0327ec15a54d701eb6ccefaa8bef328cfc03086)\n",
+      "epssDetails": {
+        "percentile": "0.54497",
+        "probability": "0.00745",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2026-45736"
+        ],
+        "CWE": [
+          "CWE-908"
+        ],
+        "GHSA": [
+          "GHSA-58qx-3vcg-4xpx"
+        ]
+      },
+      "packageName": "ws",
+      "proprietary": false,
+      "creationTime": "2026-05-17T06:22:40.106876Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2026-05-11T21:00:00Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2026-05-17T06:22:40.387156Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-10-25T14:12:17.221496Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "package.json@*",
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.2",
+        "ws@8.11.0"
+      ],
+      "upgradePath": [
+        false,
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.8",
+        "ws@8.21.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "ws",
+      "version": "8.11.0"
+    },
+    {
+      "id": "SNYK-JS-WS-17344547",
+      "title": "Asymmetric Resource Consumption (Amplification)",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+      "credit": [
+        "Nadav Magier"
+      ],
+      "semver": {
+        "vulnerable": [
+          ">=1.1.0 <5.2.5",
+          ">=6.0.0 <6.2.4",
+          ">=7.0.0 <7.5.11",
+          ">=8.0.0 <8.21.0"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "5.2.5",
+        "6.2.4",
+        "7.5.11",
+        "8.21.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 8.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "ws",
+      "references": [
+        {
+          "url": "https://github.com/websockets/ws/security/advisories/GHSA-96hv-2xvq-fx4p",
+          "title": "GitHub Advisory"
+        },
+        {
+          "url": "https://github.com/websockets/ws/commit/2b2abd458a1b647d0b6033bd62a619c36189839a",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2489661",
+          "title": "Red Hat Bugzilla Bug"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 7.5,
+          "modificationTime": "2026-06-24T05:49:41.194423Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2026-10-26T14:10:20.709250Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-26T14:10:20.709250Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-06-24T05:49:41.194423Z"
+        }
+      ],
+      "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Asymmetric Resource Consumption (Amplification) when handling a large number of very small fragments and data chunks. An attacker can cause excessive memory allocation and OOM by sending a high volume of tiny WebSocket frames\r\n\r\n## Workaround \r\nThis vulnerability can be mitigated by lowering the value of the `maxPayload` option.\n## PoC\n```js\r\nimport { WebSocket, WebSocketServer } from 'ws';\r\n\r\nconst wss = new WebSocketServer({ port: 0 }, function () {\r\n  const data = Buffer.alloc(1);\r\n  const options = { fin: false };\r\n  const { port } = wss.address();\r\n  const ws = new WebSocket(`ws://localhost:${port}`);\r\n\r\n  ws.on('open', function () {\r\n    (function send() {\r\n      ws.send(data, options, function (err) {\r\n        if (err) return;\r\n        send();\r\n      });\r\n    })();\r\n  });\r\n\r\n  ws.on('error', console.error);\r\n  ws.on('close', function (code, reason) {\r\n    console.log(`client close - code: ${code} reason: ${reason.toString()}`);\r\n  });\r\n});\r\n\r\nwss.on('connection', function (ws) {\r\n  ws.on('error', console.error);\r\n  ws.on('close', function (code, reason) {\r\n    console.log(`server close - code: ${code} reason: ${reason.toString()}`);\r\n  });\r\n});\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\n\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\n\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\n\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\n\nTwo common types of DoS vulnerabilities:\n\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](https://security.snyk.io/vuln/SNYK-JAVA-COMMONSFILEUPLOAD-30082).\n\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](https://snyk.io/vuln/npm:ws:20171108)\n\n## Remediation\nUpgrade `ws` to version 5.2.5, 6.2.4, 7.5.11, 8.21.0 or higher.\n## References\n- [GitHub Advisory](https://github.com/websockets/ws/security/advisories/GHSA-96hv-2xvq-fx4p)\n- [GitHub Commit](https://github.com/websockets/ws/commit/2b2abd458a1b647d0b6033bd62a619c36189839a)\n- [Red Hat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=2489661)\n",
+      "epssDetails": {
+        "percentile": "0.72752",
+        "probability": "0.01426",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2026-48779"
+        ],
+        "CWE": [
+          "CWE-405",
+          "CWE-770"
+        ],
+        "GHSA": [
+          "GHSA-96hv-2xvq-fx4p"
+        ]
+      },
+      "packageName": "ws",
+      "proprietary": false,
+      "creationTime": "2026-06-16T12:21:35.837880Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2026-06-15T16:34:23Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2026-06-16T12:21:46.990314Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-10-26T14:10:20.709250Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "package.json@*",
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.2",
+        "ws@8.11.0"
+      ],
+      "upgradePath": [
+        false,
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.8",
+        "ws@8.21.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "ws",
+      "version": "8.11.0"
+    },
+    {
+      "id": "SNYK-JS-WS-7266574",
+      "title": "Denial of Service (DoS)",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+      "credit": [
+        "Ryan LaPointe"
+      ],
+      "semver": {
+        "vulnerable": [
+          ">=2.1.0 <5.2.4",
+          ">=6.0.0 <6.2.3",
+          ">=7.0.0 <7.5.10",
+          ">=8.0.0 <8.17.1"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "5.2.4",
+        "6.2.3",
+        "7.5.10",
+        "8.17.1"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "js",
+      "severity": "high",
+      "cvssScore": 7.5,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "ws",
+      "references": [
+        {
+          "url": "https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/websockets/ws/issues/2230",
+          "title": "GitHub Issue"
+        },
+        {
+          "url": "https://github.com/websockets/ws/pull/2231",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/websockets/ws/releases/tag/8.17.1",
+          "title": "GitHub Release"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cvssV3BaseScore": 5.9,
+          "modificationTime": "2024-08-21T13:36:47.485619Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 7.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2026-10-13T14:04:56.491169Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.9,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-08-21T13:36:47.485619Z"
+        }
+      ],
+      "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Denial of Service (DoS) when the number of received headers exceed the `server.maxHeadersCount` or `request.maxHeadersCount` threshold.\r\n\r\n## Workaround\r\n\r\nThis issue can be mitigating by following these steps:\r\n\r\n1. Reduce the maximum allowed length of the request headers using the `--max-http-header-size=size` and/or the `maxHeaderSize` options so\r\nthat no more headers than the `server.maxHeadersCount` limit can be sent.\r\n\r\n2. Set `server.maxHeadersCount` to 0 so that no limit is applied.\n## PoC\n```js\r\n\r\nconst http = require('http');\r\nconst WebSocket = require('ws');\r\n\r\nconst server = http.createServer();\r\n\r\nconst wss = new WebSocket.Server({ server });\r\n\r\nserver.listen(function () {\r\n  const chars = \"!#$%&'*+-.0123456789abcdefghijklmnopqrstuvwxyz^_`|~\".split('');\r\n  const headers = {};\r\n  let count = 0;\r\n\r\n  for (let i = 0; i < chars.length; i++) {\r\n    if (count === 2000) break;\r\n\r\n    for (let j = 0; j < chars.length; j++) {\r\n      const key = chars[i] + chars[j];\r\n      headers[key] = 'x';\r\n\r\n      if (++count === 2000) break;\r\n    }\r\n  }\r\n\r\n  headers.Connection = 'Upgrade';\r\n  headers.Upgrade = 'websocket';\r\n  headers['Sec-WebSocket-Key'] = 'dGhlIHNhbXBsZSBub25jZQ==';\r\n  headers['Sec-WebSocket-Version'] = '13';\r\n\r\n  const request = http.request({\r\n    headers: headers,\r\n    host: '127.0.0.1',\r\n    port: server.address().port\r\n  });\r\n\r\n  request.end();\r\n});\r\n\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\n\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\n\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\n\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\n\nTwo common types of DoS vulnerabilities:\n\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](https://security.snyk.io/vuln/SNYK-JAVA-COMMONSFILEUPLOAD-30082).\n\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](https://snyk.io/vuln/npm:ws:20171108)\n\n## Remediation\nUpgrade `ws` to version 5.2.4, 6.2.3, 7.5.10, 8.17.1 or higher.\n## References\n- [GitHub Commit](https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f)\n- [GitHub Commit](https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e)\n- [GitHub Commit](https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c)\n- [GitHub Commit](https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63)\n- [GitHub Issue](https://github.com/websockets/ws/issues/2230)\n- [GitHub PR](https://github.com/websockets/ws/pull/2231)\n- [GitHub Release](https://github.com/websockets/ws/releases/tag/8.17.1)\n",
+      "epssDetails": {
+        "percentile": "0.70954",
+        "probability": "0.01357",
+        "modelVersion": "v2026.06.15"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-37890"
+        ],
+        "CWE": [
+          "CWE-400"
+        ]
+      },
+      "packageName": "ws",
+      "proprietary": false,
+      "creationTime": "2024-06-17T14:34:03.689299Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-06-16T13:35:43Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "npm",
+      "publicationTime": "2024-06-17T14:34:03.928602Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2026-10-13T14:04:56.491169Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "high",
+      "from": [
+        "package.json@*",
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.2",
+        "ws@8.11.0"
+      ],
+      "upgradePath": [
+        false,
+        "socket.io@4.8.0",
+        "socket.io-adapter@2.5.8",
+        "ws@8.21.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "ws",
+      "version": "8.11.0"
+    }
+  ],
+  "ok": false,
+  "dependencyCount": 113,
+  "org": "carlos.ruiz.galagarza",
+  "policy": "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.\nversion: v1.25.1\nignore: {}\npatch: {}\n",
+  "isPrivate": true,
+  "licensesPolicy": {
+    "severities": {},
+    "orgLicenseRules": {
+      "AGPL-1.0": {
+        "licenseType": "AGPL-1.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "AGPL-3.0": {
+        "licenseType": "AGPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "Artistic-1.0": {
+        "licenseType": "Artistic-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "Artistic-2.0": {
+        "licenseType": "Artistic-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CDDL-1.0": {
+        "licenseType": "CDDL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CPOL-1.02": {
+        "licenseType": "CPOL-1.02",
+        "severity": "high",
+        "instructions": ""
+      },
+      "EPL-1.0": {
+        "licenseType": "EPL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "GPL-2.0": {
+        "licenseType": "GPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "GPL-3.0": {
+        "licenseType": "GPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "LGPL-2.0": {
+        "licenseType": "LGPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-2.1": {
+        "licenseType": "LGPL-2.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-3.0": {
+        "licenseType": "LGPL-3.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-1.1": {
+        "licenseType": "MPL-1.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-2.0": {
+        "licenseType": "MPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MS-RL": {
+        "licenseType": "MS-RL",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "SimPL-2.0": {
+        "licenseType": "SimPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      }
+    }
+  },
+  "packageManager": "npm",
+  "ignoreSettings": {
+    "adminOnly": false,
+    "reasonRequired": false,
+    "disregardFilesystemIgnores": false,
+    "autoApproveIgnores": false,
+    "approvalWorkflowEnabled": false
+  },
+  "summary": "6 vulnerable dependency paths",
+  "remediation": {
+    "unresolved": [
+      {
+        "id": "SNYK-JS-PROXYADDR-19812342",
+        "title": "User Impersonation",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "credit": [
+          "kagebunsher"
+        ],
+        "semver": {
+          "vulnerable": [
+            ">=1.1.0 <2.0.8"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "2.0.8"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "critical",
+        "cvssScore": 9.3,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "proxy-addr",
+        "references": [
+          {
+            "url": "https://github.com/jshttp/proxy-addr/security/advisories/GHSA-jqcg-44mw-7w3h",
+            "title": "GitHub Advisory"
+          },
+          {
+            "url": "https://github.com/jshttp/proxy-addr/commit/780911d84d18e2c5fa008ed0c0d387631ec11965",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-10-08T05:38:39.078594Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "critical",
+            "baseScore": 9.3,
+            "cvssVersion": "4.0",
+            "modificationTime": "2026-10-22T14:06:13.144148Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+            "assigner": "Snyk",
+            "severity": "critical",
+            "baseScore": 9.1,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-22T14:06:13.144148Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-08T05:38:39.078594Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to User Impersonation in its subnet matching logic, where an IPv4-mapped IPv6 trust entry with a short prefix such as `::ffff:10.0.0.0/8` compiles with all-zero leading bits and matches every address rather than the intended block. An attacker can control the value returned by `proxyaddr(req, trust)`, and therefore `req.ip` and `req.ips` in Express, by sending an arbitrary `X-Forwarded-For` header, since every client is then trusted as a proxy at hop 0, which defeats IP-based access control, rate limiting, geolocation, and audit logging. This requires the application to configure its trust list with an IPv4-mapped IPv6 subnet using a short prefix, or any IPv6 subnet with zero leading bits such as `::/1`, and the misconfiguration compiles without error.\r\n\r\n## Workaround\r\n\r\nThis vulnerability can be avoided by expressing trust subnets in plain IPv4 notation, such as `10.0.0.0/8`, or where IPv4-mapped IPv6 notation is required, by using a prefix long enough to cover the mapped marker, such as `::ffff:10.0.0.0/104`.\n## Remediation\nUpgrade `proxy-addr` to version 2.0.8 or higher.\n## References\n- [GitHub Advisory](https://github.com/jshttp/proxy-addr/security/advisories/GHSA-jqcg-44mw-7w3h)\n- [GitHub Commit](https://github.com/jshttp/proxy-addr/commit/780911d84d18e2c5fa008ed0c0d387631ec11965)\n",
+        "epssDetails": {
+          "percentile": "0.16684",
+          "probability": "0.00260",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2026-90711"
+          ],
+          "CWE": [
+            "CWE-290"
+          ],
+          "GHSA": [
+            "GHSA-jqcg-44mw-7w3h"
+          ]
+        },
+        "packageName": "proxy-addr",
+        "proprietary": false,
+        "creationTime": "2026-09-15T08:22:56.328403Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2026-09-15T07:14:51Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2026-09-15T08:22:56.519310Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-10-22T14:06:13.144148Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "express@4.22.3",
+          "proxy-addr@2.0.7"
+        ],
+        "upgradePath": [
+          false,
+          "express@4.22.3",
+          "proxy-addr@2.0.8"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "proxy-addr",
+        "version": "2.0.7",
+        "severityWithCritical": "critical"
+      },
+      {
+        "id": "SNYK-JS-SOCKETIOPARSER-15680278",
+        "title": "Allocation of Resources Without Limits or Throttling",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "credit": [
+          "darrachequesne"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<3.3.5",
+            ">=3.4.0 <3.4.4",
+            ">=4.0.0 <4.2.6"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.3.5",
+          "3.4.4",
+          "4.2.6"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 8.7,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "socket.io-parser",
+        "references": [
+          {
+            "url": "https://github.com/socketio/socket.io/commit/719f9ebab0772ffb882bd614b387e585c1aa75d4",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/socketio/socket.io/commit/b25738c416c4e32fbff62ee182afa8f6d0dacf78",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-04-15T01:13:54.237313Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 8.7,
+            "cvssVersion": "4.0",
+            "modificationTime": "2026-10-25T14:08:25.475580Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-25T14:08:25.475580Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "NVD",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-04-15T01:13:54.237313Z"
+          }
+        ],
+        "description": "## Overview\n[socket.io-parser](https://www.npmjs.org/package/socket.io-parser) is a socket.io protocol parser\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `Decoder` class, which accepts an unlimited number of binary attachments. An attacker can exploit this to exhaust server memory.\n## Remediation\nUpgrade `socket.io-parser` to version 3.3.5, 3.4.4, 4.2.6 or higher.\n## References\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/719f9ebab0772ffb882bd614b387e585c1aa75d4)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/b25738c416c4e32fbff62ee182afa8f6d0dacf78)\n",
+        "epssDetails": {
+          "percentile": "0.44086",
+          "probability": "0.00523",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2026-33151"
+          ],
+          "CWE": [
+            "CWE-754",
+            "CWE-770"
+          ],
+          "GHSA": [
+            "GHSA-677m-j7p3-52f9"
+          ]
+        },
+        "packageName": "socket.io-parser",
+        "proprietary": false,
+        "creationTime": "2026-03-18T11:01:53.077684Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2026-03-17T15:05:14Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2026-03-18T11:01:53.366840Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-10-25T14:08:25.475580Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "socket.io@4.8.0",
+          "socket.io-parser@4.2.4"
+        ],
+        "upgradePath": [
+          false,
+          "socket.io@4.8.0",
+          "socket.io-parser@4.2.7"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "socket.io-parser",
+        "version": "4.2.4",
+        "severityWithCritical": "high"
+      },
+      {
+        "id": "SNYK-JS-SOCKETIOPARSER-18517008",
+        "title": "Improper Check for Unusual or Exceptional Conditions",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "credit": [
+          "aretekzs",
+          "mauriceng98",
+          "Wesley Wang",
+          "Strickland",
+          "七号公园"
+        ],
+        "semver": {
+          "vulnerable": [
+            "<3.3.6",
+            ">=3.4.0 <3.4.5",
+            ">=4.0.0 <4.2.7"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.3.6",
+          "3.4.5",
+          "4.2.7"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 8.7,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "socket.io-parser",
+        "references": [
+          {
+            "url": "https://github.com/socketio/socket.io/security/advisories/GHSA-2m8v-j782-fhvr",
+            "title": "GitHub Advisory"
+          },
+          {
+            "url": "https://github.com/socketio/socket.io/commit/7c6ef571a00656718e9e05e3b948fd1758b2a7b4",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/socketio/socket.io/commit/9c6323e5cde41bd75df3379b5fc9293664a5f240",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/socketio/socket.io/commit/ced94ffa3ac020a8f3c14eb98a3bf34acb14d291",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-08-07T05:47:51.938464Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 8.7,
+            "cvssVersion": "4.0",
+            "modificationTime": "2026-09-24T14:24:18.699464Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-09-24T14:24:18.699464Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-08-07T05:47:51.938464Z"
+          }
+        ],
+        "description": "## Overview\n[socket.io-parser](https://www.npmjs.org/package/socket.io-parser) is a socket.io protocol parser\n\nAffected versions of this package are vulnerable to Improper Check for Unusual or Exceptional Conditions via attachment handling. An attacker can cause the server to exhaust memory resources by sending specially crafted packets that make the server wait for and buffer a large number of binary attachments.\n## Remediation\nUpgrade `socket.io-parser` to version 3.3.6, 3.4.5, 4.2.7 or higher.\n## References\n- [GitHub Advisory](https://github.com/socketio/socket.io/security/advisories/GHSA-2m8v-j782-fhvr)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/7c6ef571a00656718e9e05e3b948fd1758b2a7b4)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/9c6323e5cde41bd75df3379b5fc9293664a5f240)\n- [GitHub Commit](https://github.com/socketio/socket.io/commit/ced94ffa3ac020a8f3c14eb98a3bf34acb14d291)\n",
+        "epssDetails": {
+          "percentile": "0.47911",
+          "probability": "0.00630",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2026-69185"
+          ],
+          "CWE": [
+            "CWE-754"
+          ],
+          "GHSA": [
+            "GHSA-2m8v-j782-fhvr"
+          ]
+        },
+        "packageName": "socket.io-parser",
+        "proprietary": false,
+        "creationTime": "2026-08-04T14:52:18.456055Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2026-08-03T19:09:44Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2026-08-04T14:52:18.662459Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-09-24T14:24:18.699464Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "socket.io@4.8.0",
+          "socket.io-parser@4.2.4"
+        ],
+        "upgradePath": [
+          false,
+          "socket.io@4.8.0",
+          "socket.io-parser@4.2.7"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "socket.io-parser",
+        "version": "4.2.4",
+        "severityWithCritical": "high"
+      },
+      {
+        "id": "SNYK-JS-WS-16722635",
+        "title": "Use of Uninitialized Resource",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N/E:P",
+        "credit": [
+          "Nikita Skovoroda"
+        ],
+        "semver": {
+          "vulnerable": [
+            ">=8.0.0 <8.20.1"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "8.20.1"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "medium",
+        "cvssScore": 6.9,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "ws",
+        "references": [
+          {
+            "url": "https://github.com/websockets/ws/security/advisories/GHSA-58qx-3vcg-4xpx",
+            "title": "GitHub Advisory"
+          },
+          {
+            "url": "https://github.com/websockets/ws/commit/c0327ec15a54d701eb6ccefaa8bef328cfc03086",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-05-20T01:20:41.228574Z"
+          },
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-06-19T05:48:20.686423Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.9,
+            "cvssVersion": "4.0",
+            "modificationTime": "2026-10-25T14:12:17.221496Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N/E:P",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 4.9,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-25T14:12:17.221496Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "assigner": "NVD",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-05-20T01:20:41.228574Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-06-19T05:48:20.686423Z"
+          }
+        ],
+        "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Use of Uninitialized Resource in the `websocket.close()` implementation in the `Sender` class, which exposes uninitialized memory when a `TypedArray` is provided as the `reason` argument.\r\n\r\n**Note:** The project maintainers note that this \"flaw is only exploitable through misuse that is unlikely in practice\".\n## PoC\n```js\r\nimport { deepStrictEqual } from 'node:assert';\r\nimport { WebSocket, WebSocketServer } from 'ws';\r\n\r\nconst wss = new WebSocketServer(\r\n  { port: 0, skipUTF8Validation: true },\r\n  function () {\r\n    const { port } = wss.address();\r\n    const ws = new WebSocket(`ws://localhost:${port}`, {\r\n      skipUTF8Validation: true\r\n    });\r\n\r\n    ws.on('close', function (code, reason) {\r\n      deepStrictEqual(reason, Buffer.alloc(80));\r\n    });\r\n  }\r\n);\r\n\r\nwss.on('connection', function (ws) {\r\n  ws.close(1000, new Float32Array(20));\r\n});\r\n```\n## Remediation\nUpgrade `ws` to version 8.20.1 or higher.\n## References\n- [GitHub Advisory](https://github.com/websockets/ws/security/advisories/GHSA-58qx-3vcg-4xpx)\n- [GitHub Commit](https://github.com/websockets/ws/commit/c0327ec15a54d701eb6ccefaa8bef328cfc03086)\n",
+        "epssDetails": {
+          "percentile": "0.54497",
+          "probability": "0.00745",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2026-45736"
+          ],
+          "CWE": [
+            "CWE-908"
+          ],
+          "GHSA": [
+            "GHSA-58qx-3vcg-4xpx"
+          ]
+        },
+        "packageName": "ws",
+        "proprietary": false,
+        "creationTime": "2026-05-17T06:22:40.106876Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2026-05-11T21:00:00Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2026-05-17T06:22:40.387156Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-10-25T14:12:17.221496Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.2",
+          "ws@8.11.0"
+        ],
+        "upgradePath": [
+          false,
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.8",
+          "ws@8.21.3"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "ws",
+        "version": "8.11.0",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-JS-WS-17344547",
+        "title": "Asymmetric Resource Consumption (Amplification)",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+        "credit": [
+          "Nadav Magier"
+        ],
+        "semver": {
+          "vulnerable": [
+            ">=1.1.0 <5.2.5",
+            ">=6.0.0 <6.2.4",
+            ">=7.0.0 <7.5.11",
+            ">=8.0.0 <8.21.0"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "5.2.5",
+          "6.2.4",
+          "7.5.11",
+          "8.21.0"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 8.7,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "ws",
+        "references": [
+          {
+            "url": "https://github.com/websockets/ws/security/advisories/GHSA-96hv-2xvq-fx4p",
+            "title": "GitHub Advisory"
+          },
+          {
+            "url": "https://github.com/websockets/ws/commit/2b2abd458a1b647d0b6033bd62a619c36189839a",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2489661",
+            "title": "Red Hat Bugzilla Bug"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 7.5,
+            "modificationTime": "2026-06-24T05:49:41.194423Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 8.7,
+            "cvssVersion": "4.0",
+            "modificationTime": "2026-10-26T14:10:20.709250Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-26T14:10:20.709250Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-06-24T05:49:41.194423Z"
+          }
+        ],
+        "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Asymmetric Resource Consumption (Amplification) when handling a large number of very small fragments and data chunks. An attacker can cause excessive memory allocation and OOM by sending a high volume of tiny WebSocket frames\r\n\r\n## Workaround \r\nThis vulnerability can be mitigated by lowering the value of the `maxPayload` option.\n## PoC\n```js\r\nimport { WebSocket, WebSocketServer } from 'ws';\r\n\r\nconst wss = new WebSocketServer({ port: 0 }, function () {\r\n  const data = Buffer.alloc(1);\r\n  const options = { fin: false };\r\n  const { port } = wss.address();\r\n  const ws = new WebSocket(`ws://localhost:${port}`);\r\n\r\n  ws.on('open', function () {\r\n    (function send() {\r\n      ws.send(data, options, function (err) {\r\n        if (err) return;\r\n        send();\r\n      });\r\n    })();\r\n  });\r\n\r\n  ws.on('error', console.error);\r\n  ws.on('close', function (code, reason) {\r\n    console.log(`client close - code: ${code} reason: ${reason.toString()}`);\r\n  });\r\n});\r\n\r\nwss.on('connection', function (ws) {\r\n  ws.on('error', console.error);\r\n  ws.on('close', function (code, reason) {\r\n    console.log(`server close - code: ${code} reason: ${reason.toString()}`);\r\n  });\r\n});\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\n\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\n\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\n\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\n\nTwo common types of DoS vulnerabilities:\n\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](https://security.snyk.io/vuln/SNYK-JAVA-COMMONSFILEUPLOAD-30082).\n\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](https://snyk.io/vuln/npm:ws:20171108)\n\n## Remediation\nUpgrade `ws` to version 5.2.5, 6.2.4, 7.5.11, 8.21.0 or higher.\n## References\n- [GitHub Advisory](https://github.com/websockets/ws/security/advisories/GHSA-96hv-2xvq-fx4p)\n- [GitHub Commit](https://github.com/websockets/ws/commit/2b2abd458a1b647d0b6033bd62a619c36189839a)\n- [Red Hat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=2489661)\n",
+        "epssDetails": {
+          "percentile": "0.72752",
+          "probability": "0.01426",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2026-48779"
+          ],
+          "CWE": [
+            "CWE-405",
+            "CWE-770"
+          ],
+          "GHSA": [
+            "GHSA-96hv-2xvq-fx4p"
+          ]
+        },
+        "packageName": "ws",
+        "proprietary": false,
+        "creationTime": "2026-06-16T12:21:35.837880Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2026-06-15T16:34:23Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2026-06-16T12:21:46.990314Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-10-26T14:10:20.709250Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.2",
+          "ws@8.11.0"
+        ],
+        "upgradePath": [
+          false,
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.8",
+          "ws@8.21.3"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "ws",
+        "version": "8.11.0",
+        "severityWithCritical": "high"
+      },
+      {
+        "id": "SNYK-JS-WS-7266574",
+        "title": "Denial of Service (DoS)",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+        "credit": [
+          "Ryan LaPointe"
+        ],
+        "semver": {
+          "vulnerable": [
+            ">=2.1.0 <5.2.4",
+            ">=6.0.0 <6.2.3",
+            ">=7.0.0 <7.5.10",
+            ">=8.0.0 <8.17.1"
+          ]
+        },
+        "exploit": "Proof of Concept",
+        "fixedIn": [
+          "5.2.4",
+          "6.2.3",
+          "7.5.10",
+          "8.17.1"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "js",
+        "severity": "high",
+        "cvssScore": 7.5,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "ws",
+        "references": [
+          {
+            "url": "https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/websockets/ws/issues/2230",
+            "title": "GitHub Issue"
+          },
+          {
+            "url": "https://github.com/websockets/ws/pull/2231",
+            "title": "GitHub PR"
+          },
+          {
+            "url": "https://github.com/websockets/ws/releases/tag/8.17.1",
+            "title": "GitHub Release"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "cvssV3BaseScore": 5.9,
+            "modificationTime": "2024-08-21T13:36:47.485619Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:P",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 7.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2026-10-13T14:04:56.491169Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 5.9,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-08-21T13:36:47.485619Z"
+          }
+        ],
+        "description": "## Overview\n[ws](https://www.npmjs.com/package/ws) is a simple to use websocket client, server and console for node.js.\n\nAffected versions of this package are vulnerable to Denial of Service (DoS) when the number of received headers exceed the `server.maxHeadersCount` or `request.maxHeadersCount` threshold.\r\n\r\n## Workaround\r\n\r\nThis issue can be mitigating by following these steps:\r\n\r\n1. Reduce the maximum allowed length of the request headers using the `--max-http-header-size=size` and/or the `maxHeaderSize` options so\r\nthat no more headers than the `server.maxHeadersCount` limit can be sent.\r\n\r\n2. Set `server.maxHeadersCount` to 0 so that no limit is applied.\n## PoC\n```js\r\n\r\nconst http = require('http');\r\nconst WebSocket = require('ws');\r\n\r\nconst server = http.createServer();\r\n\r\nconst wss = new WebSocket.Server({ server });\r\n\r\nserver.listen(function () {\r\n  const chars = \"!#$%&'*+-.0123456789abcdefghijklmnopqrstuvwxyz^_`|~\".split('');\r\n  const headers = {};\r\n  let count = 0;\r\n\r\n  for (let i = 0; i < chars.length; i++) {\r\n    if (count === 2000) break;\r\n\r\n    for (let j = 0; j < chars.length; j++) {\r\n      const key = chars[i] + chars[j];\r\n      headers[key] = 'x';\r\n\r\n      if (++count === 2000) break;\r\n    }\r\n  }\r\n\r\n  headers.Connection = 'Upgrade';\r\n  headers.Upgrade = 'websocket';\r\n  headers['Sec-WebSocket-Key'] = 'dGhlIHNhbXBsZSBub25jZQ==';\r\n  headers['Sec-WebSocket-Version'] = '13';\r\n\r\n  const request = http.request({\r\n    headers: headers,\r\n    host: '127.0.0.1',\r\n    port: server.address().port\r\n  });\r\n\r\n  request.end();\r\n});\r\n\r\n```\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\n\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\n\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\n\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\n\nTwo common types of DoS vulnerabilities:\n\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](https://security.snyk.io/vuln/SNYK-JAVA-COMMONSFILEUPLOAD-30082).\n\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](https://snyk.io/vuln/npm:ws:20171108)\n\n## Remediation\nUpgrade `ws` to version 5.2.4, 6.2.3, 7.5.10, 8.17.1 or higher.\n## References\n- [GitHub Commit](https://github.com/websockets/ws/commit/22c28763234aa75a7e1b76f5c01c181260d7917f)\n- [GitHub Commit](https://github.com/websockets/ws/commit/4abd8f6de4b0b65ef80b3ff081989479ed93377e)\n- [GitHub Commit](https://github.com/websockets/ws/commit/e55e5106f10fcbaac37cfa89759e4cc0d073a52c)\n- [GitHub Commit](https://github.com/websockets/ws/commit/eeb76d313e2a00dd5247ca3597bba7877d064a63)\n- [GitHub Issue](https://github.com/websockets/ws/issues/2230)\n- [GitHub PR](https://github.com/websockets/ws/pull/2231)\n- [GitHub Release](https://github.com/websockets/ws/releases/tag/8.17.1)\n",
+        "epssDetails": {
+          "percentile": "0.70954",
+          "probability": "0.01357",
+          "modelVersion": "v2026.06.15"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2024-37890"
+          ],
+          "CWE": [
+            "CWE-400"
+          ]
+        },
+        "packageName": "ws",
+        "proprietary": false,
+        "creationTime": "2024-06-17T14:34:03.689299Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2024-06-16T13:35:43Z",
+        "exploitDetails": {
+          "sources": [
+            "Snyk"
+          ],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Proof of Concept",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Proof of Concept",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "npm",
+        "publicationTime": "2024-06-17T14:34:03.928602Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2026-10-13T14:04:56.491169Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "package.json@*",
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.2",
+          "ws@8.11.0"
+        ],
+        "upgradePath": [
+          false,
+          "socket.io@4.8.0",
+          "socket.io-adapter@2.5.8",
+          "ws@8.21.3"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": false,
+        "isRuntime": false,
+        "name": "ws",
+        "version": "8.11.0",
+        "severityWithCritical": "high"
+      }
+    ],
+    "upgrade": {},
+    "patch": {},
+    "ignore": {},
+    "pin": {}
+  },
+  "filesystemPolicy": false,
+  "filtered": {
+    "ignore": [],
+    "patch": []
+  },
+  "uniqueCount": 6,
+  "projectName": "package.json",
+  "displayTargetFile": "package-lock.json",
+  "hasUnknownVersions": false,
+  "path": "C:\\Lab5-Paradigmas\\despues"
+}
