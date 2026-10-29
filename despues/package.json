@@ -1,13 +1,30 @@
 {
   "dependencies": {
     "dotenv": "^18.0.9",
-    "express": "*",
+    "express": "4.22.3",
     "express-openid-connect": "^2.20.2",
-    "mocha": "^10.2.0",
-    "socket.io": "*"
+    "mocha": "12.0.0",
+    "socket.io": "4.8.0"
   },
   "scripts": {
     "start": "node server.js",
-    "test": "mocha"
+    "test": "mocha",
+    "test:unit": "mocha test/test.js",
+    "test:integration": "jest --config jest.integration.config.js --runInBand --forceExit",
+    "test:e2e": "playwright test --project=chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "jest": "^29.7.0",
+    "jest-html-reporters": "^3.1.7",
+    "mochawesome": "^8.1.1",
+    "socket.io-client": "4.8.0",
+    "ws": "^8.18.3"
+  },
+  "overrides": {
+    "proxy-addr": "2.0.8",
+    "socket.io-parser": "4.2.7",
+    "socket.io-adapter": "2.5.8",
+    "engine.io": "6.6.11"
   }
 }

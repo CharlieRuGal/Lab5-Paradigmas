@@ -263,8 +263,7 @@
     <script>
 
     var colorHexTxt = "";
-    var IMAGE_TAG = /^<img src="([^"]+)" style="max-height: 400px;max-width: 400px;">$/;
-    var VIDEO_TAG = /^<iframe width="560" height="315" src="https:\/\/www\.youtube\.com\/embed\/([A-Za-z0-9_-]{11})" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen><\/iframe>$/;
+    var YT_ID = /^[A-Za-z0-9_-]{11}$/;
 
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
@@ -306,10 +305,8 @@
         thread.scrollTop = thread.scrollHeight;
     }
 
-    function renderBody(container, mensaje) {
-        var text = typeof mensaje === 'string' ? mensaje : '';
-        var imageMatch = text.match(IMAGE_TAG);
-        var imageUrl = imageMatch ? safeImageUrl(imageMatch[1]) : '';
+    function renderBody(container, msgJson) {
+        var imageUrl = msgJson && msgJson.type === 'image' ? safeImageUrl(msgJson.url) : '';
         if (imageUrl) {
           var img = document.createElement('img');
           img.alt = 'Imagen compartida';
@@ -320,22 +317,25 @@
           return;
         }
 
-        var videoMatch = text.match(VIDEO_TAG);
-        if (videoMatch) {
+        if (msgJson && msgJson.type === 'youtube' && typeof msgJson.videoId === 'string' && YT_ID.test(msgJson.videoId)) {
           var iframe = document.createElement('iframe');
           iframe.title = 'Video de YouTube';
           iframe.allowFullscreen = true;
           iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
-          iframe.src = 'https://www.youtube.com/embed/' + videoMatch[1];
+          iframe.src = 'https://www.youtube.com/embed/' + msgJson.videoId;
           container.appendChild(iframe);
           return;
         }
 
-        container.textContent = text;
+        container.textContent = msgJson && typeof msgJson.mensaje === 'string' ? msgJson.mensaje : '';
     }
 
     function appendMessage(msgJson) {
-        var nombre = msgJson && typeof msgJson.nombre === 'string' ? msgJson.nombre : '';
+        if (!msgJson || (msgJson.type !== 'text' && msgJson.type !== 'image' && msgJson.type !== 'youtube')) {
+          return;
+        }
+
+        var nombre = typeof msgJson.nombre === 'string' ? msgJson.nombre : '';
         var visibleName = $('#usuario').text();
         var li = document.createElement('li');
         // Misma cadena visible, no un identificador de cuenta. Dos personas con el mismo nombre se verían iguales.
@@ -344,14 +344,14 @@
         var sender = document.createElement('span');
         sender.className = 'sender';
         sender.textContent = nombre;
-        var color = safeColor(msgJson && msgJson.color);
+        var color = safeColor(msgJson.color);
         if (color) {
           sender.style.color = color;
         }
 
         var body = document.createElement('div');
         body.className = 'body';
-        renderBody(body, msgJson && msgJson.mensaje);
+        renderBody(body, msgJson);
 
         li.appendChild(sender);
         li.appendChild(body);
@@ -405,7 +405,12 @@
         });
 
         socket.on('Evento-Mensaje-Server', function(msg){
-            var msgJson = JSON.parse(msg);
+            var msgJson;
+            try {
+                msgJson = JSON.parse(msg);
+            } catch (e) {
+                return;
+            }
             appendMessage(msgJson);
         });
 
