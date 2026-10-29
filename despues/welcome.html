@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0B2545">
+    <title>UNA Chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100dvh;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #0B2545;
+        background: #0B2545;
+      }
+      .welcome {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      }
+      .intro {
+        display: flex;
+        align-items: center;
+        padding: calc(48px + env(safe-area-inset-top)) 48px calc(48px + env(safe-area-inset-bottom));
+        background: #0B2545;
+        color: #FFFFFF;
+      }
+      .intro-inner { width: min(34rem, 100%); }
+      .mark {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 28px;
+        border: 1px solid #82E0FF;
+        border-radius: 14px;
+        background: #12315C;
+        color: #82E0FF;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+      .lab {
+        margin-bottom: 12px;
+        color: #D5E4EF;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      h1 {
+        margin-bottom: 16px;
+        font-size: 3rem;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .lead {
+        margin-bottom: 16px;
+        color: #82E0FF;
+        font-size: 1.35rem;
+        font-weight: 600;
+      }
+      .desc {
+        max-width: 38rem;
+        color: #D5E4EF;
+        font-size: 1.05rem;
+      }
+      .hints {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 36px;
+        list-style: none;
+      }
+      .hints li {
+        padding: 8px 14px;
+        border: 1px solid #82E0FF;
+        border-radius: 999px;
+        color: #FFFFFF;
+        background: #12315C;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .access {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 24px;
+        padding-bottom: calc(32px + env(safe-area-inset-bottom));
+        background: #F4F8FB;
+      }
+      .card {
+        width: min(26rem, 100%);
+        padding: 36px 32px;
+        border: 1px solid #D5E4EF;
+        border-radius: 20px;
+        background: #FFFFFF;
+      }
+      h2 {
+        margin-bottom: 12px;
+        font-size: 1.6rem;
+        line-height: 1.2;
+      }
+      .card p { color: #0B2545; }
+      .explain { margin-bottom: 24px; }
+      .google {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: #0B2545;
+        color: #FFFFFF;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .google:hover { background: #12315C; }
+      .google:focus-visible {
+        outline: 3px solid #82E0FF;
+        outline-offset: 3px;
+      }
+      .note {
+        margin-top: 16px;
+        color: #5C7288;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 800px) {
+        .welcome { grid-template-columns: 1fr; }
+        .intro { padding: 28px 20px 24px; }
+        h1 { font-size: 2.25rem; }
+        .lead { font-size: 1.15rem; }
+        .hints { margin-top: 24px; }
+        .access { padding: 20px 16px 28px; }
+        .card { padding: 28px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="welcome">
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-inner">
+          <p class="mark" aria-hidden="true">UNA</p>
+          <p class="lab">Laboratorio de Paradigmas de Programación</p>
+          <h1 id="intro-title">UNA Chat</h1>
+          <p class="lead">Conectate, compartí y conversá.</p>
+          <p class="desc">Un espacio de comunicación donde podés intercambiar mensajes, compartir imágenes y visualizar videos de YouTube de forma sencilla y segura.</p>
+          <ul class="hints" aria-hidden="true">
+            <li>Mensajes</li>
+            <li>Imágenes</li>
+            <li>YouTube</li>
+          </ul>
+        </div>
+      </section>
+      <section class="access" aria-labelledby="access-title">
+        <div class="card">
+          <h2 id="access-title">Bienvenido a UNA Chat</h2>
+          <p class="explain">Entrá con tu cuenta de Google. Auth0 gestiona el acceso seguro.</p>
+          <a class="google" href="/login">Continuar con Google</a>
+          <p class="note">No se pide una contraseña en esta página. Al continuar se abre el acceso de Google.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

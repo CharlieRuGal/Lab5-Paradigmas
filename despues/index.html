@@ -1,35 +1,271 @@
 <!doctype html>
-<html>
+<html lang="es">
   <head>
-    <title>Chat Socket.IO UNA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0B2545">
+    <title>UNA Chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px;}
-      form button { width: 10%; background: rgb(130, 224, 255);  border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-      #messages { margin-bottom: 40px }
-      #nombre, #m { display: inline-block;}
-      #m {width: 69%; margin-right: 4px;}
-      #nombre {width: 20%}
+      html, body { height: 100%; }
+      body {
+        font-family: system-ui, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.45;
+        color: #0B2545;
+        background: #0B2545;
+        overflow: hidden;
+      }
+      .app {
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background: #F4F8FB;
+      }
+      #bar {
+        background: #0B2545;
+        color: #FFFFFF;
+        flex-shrink: 0;
+        padding-top: env(safe-area-inset-top);
+      }
+      .bar-inner {
+        width: min(960px, 100%);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .mark {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border: 1px solid #82E0FF;
+        border-radius: 12px;
+        background: #12315C;
+        color: #82E0FF;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+      .app-name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+      .session {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 16px;
+        min-width: 0;
+      }
+      #usuario {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 600;
+      }
+      #usuario:empty { display: none; }
+      #bar a {
+        color: #82E0FF;
+        font-weight: 600;
+        text-decoration: none;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+        padding: 0 4px;
+      }
+      #bar a:hover { text-decoration: underline; }
+      #bar a:focus-visible,
+      form button:focus-visible,
+      #m:focus {
+        outline: 3px solid #82E0FF;
+        outline-offset: 2px;
+      }
+      #thread {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      #empty {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        text-align: center;
+        color: #5C7288;
+      }
+      #empty[hidden] { display: none; }
+      #messages {
+        width: min(960px, 100%);
+        min-height: 100%;
+        margin: 0 auto;
+        padding: 16px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+      #messages li {
+        max-width: min(75%, 32rem);
+        padding: 10px 14px;
+        border: 1px solid #D5E4EF;
+        border-radius: 16px;
+        background: #FFFFFF;
+        overflow-wrap: anywhere;
+      }
+      #messages li.other {
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+      }
+      #messages li.mine {
+        align-self: flex-end;
+        border-color: #82E0FF;
+        border-bottom-right-radius: 4px;
+      }
+      .sender {
+        display: block;
+        margin-bottom: 4px;
+        color: #12315C;
+        font-size: 0.875rem;
+        font-weight: 700;
+      }
+      .body {
+        white-space: pre-wrap;
+      }
+      #messages img,
+      #messages iframe {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 4px;
+        border: 0;
+        border-radius: 10px;
+      }
+      #messages img {
+        width: auto;
+        height: auto;
+        max-height: 400px;
+      }
+      #messages iframe {
+        aspect-ratio: 16 / 9;
+        height: auto;
+      }
+      form {
+        flex-shrink: 0;
+        background: #FFFFFF;
+        border-top: 1px solid #D5E4EF;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .composer {
+        width: min(960px, 100%);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      #m {
+        flex: 1;
+        min-width: 0;
+        min-height: 44px;
+        padding: 10px 14px;
+        border: 1px solid #D5E4EF;
+        border-radius: 12px;
+        background: #FFFFFF;
+        color: #0B2545;
+        font: inherit;
+        font-size: 16px;
+      }
+      form button {
+        flex-shrink: 0;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 12px;
+        background: #0B2545;
+        color: #FFFFFF;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      form button:hover { background: #12315C; }
+      @media (max-width: 720px) {
+        .bar-inner { flex-wrap: wrap; row-gap: 4px; }
+        .session {
+          flex: 1 1 100%;
+          justify-content: space-between;
+        }
+        #usuario { max-width: 58vw; }
+        #messages li { max-width: 88%; }
+        .composer { padding: 10px 12px; }
+      }
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="nombre" autocomplete="off" placeholder="Username"/>
-      <input id="m" autocomplete="off" placeholder="Escriba un mensaje" /><button>Send</button>
-    </form>
+    <div class="app" id="app">
+      <header id="bar">
+        <div class="bar-inner">
+          <div class="brand">
+            <span class="mark" aria-hidden="true">UNA</span>
+            <p class="app-name">UNA Chat</p>
+          </div>
+          <div class="session">
+            <span id="usuario"></span>
+            <a href="/logout">Cerrar sesión</a>
+          </div>
+        </div>
+      </header>
+      <main id="thread">
+        <p id="empty">Aún no hay mensajes</p>
+        <ul id="messages" aria-live="polite"></ul>
+      </main>
+      <form action="">
+        <div class="composer">
+          <label class="sr-only" for="m">Mensaje</label>
+          <input id="m" autocomplete="off" placeholder="Escriba un mensaje">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
     <script src="https://cdn.socket.io/4.7.2/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
 
     var colorHexTxt = "";
+    var IMAGE_TAG = /^<img src="([^"]+)" style="max-height: 400px;max-width: 400px;">$/;
+    var VIDEO_TAG = /^<iframe width="560" height="315" src="https:\/\/www\.youtube\.com\/embed\/([A-Za-z0-9_-]{11})" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen><\/iframe>$/;
 
-    // genera colores aleatorios en hexadeximal
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -40,32 +276,141 @@
         return color;
      }
 
+    function safeColor(value) {
+        return /^#[0-9A-Fa-f]{6}$/.test(value) ? value : '';
+    }
+
+    function safeImageUrl(value) {
+        if (typeof value !== 'string' || /[\u0000-\u001F\u007F\s]/.test(value)) {
+          return '';
+        }
+        try {
+          var parsed = new URL(value);
+          if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return '';
+          }
+          if (parsed.username || parsed.password) {
+            return '';
+          }
+          if (!/\.(?:jpg|jpeg|png|gif|bmp)$/i.test(parsed.pathname)) {
+            return '';
+          }
+          return parsed.href;
+        } catch (e) {
+          return '';
+        }
+    }
+
+    function scrollToLatest() {
+        var thread = document.getElementById('thread');
+        thread.scrollTop = thread.scrollHeight;
+    }
+
+    function renderBody(container, mensaje) {
+        var text = typeof mensaje === 'string' ? mensaje : '';
+        var imageMatch = text.match(IMAGE_TAG);
+        var imageUrl = imageMatch ? safeImageUrl(imageMatch[1]) : '';
+        if (imageUrl) {
+          var img = document.createElement('img');
+          img.alt = 'Imagen compartida';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('load', scrollToLatest);
+          img.src = imageUrl;
+          container.appendChild(img);
+          return;
+        }
+
+        var videoMatch = text.match(VIDEO_TAG);
+        if (videoMatch) {
+          var iframe = document.createElement('iframe');
+          iframe.title = 'Video de YouTube';
+          iframe.allowFullscreen = true;
+          iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+          iframe.src = 'https://www.youtube.com/embed/' + videoMatch[1];
+          container.appendChild(iframe);
+          return;
+        }
+
+        container.textContent = text;
+    }
+
+    function appendMessage(msgJson) {
+        var nombre = msgJson && typeof msgJson.nombre === 'string' ? msgJson.nombre : '';
+        var visibleName = $('#usuario').text();
+        var li = document.createElement('li');
+        // Misma cadena visible, no un identificador de cuenta. Dos personas con el mismo nombre se verían iguales.
+        li.className = (nombre !== '' && nombre === visibleName) ? 'mine' : 'other';
+
+        var sender = document.createElement('span');
+        sender.className = 'sender';
+        sender.textContent = nombre;
+        var color = safeColor(msgJson && msgJson.color);
+        if (color) {
+          sender.style.color = color;
+        }
+
+        var body = document.createElement('div');
+        body.className = 'body';
+        renderBody(body, msgJson && msgJson.mensaje);
+
+        li.appendChild(sender);
+        li.appendChild(body);
+        document.getElementById('messages').appendChild(li);
+        document.getElementById('empty').hidden = true;
+        scrollToLatest();
+    }
+
+    function fitVisibleViewport() {
+        var app = document.getElementById('app');
+        if (!window.visualViewport) {
+          return;
+        }
+        app.style.height = window.visualViewport.height + 'px';
+        app.style.transform = 'translateY(' + window.visualViewport.offsetTop + 'px)';
+    }
+
       $(function () {
         var socket = io();
+        fitVisibleViewport();
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener('resize', fitVisibleViewport);
+          window.visualViewport.addEventListener('scroll', fitVisibleViewport);
+        }
 
-        // emite evento al servidor
-        
+        fetch('/profile', { credentials: 'same-origin' })
+          .then(function (res) {
+            if (!res.ok) {
+              window.location = '/login';
+              return null;
+            }
+            return res.json();
+          })
+          .then(function (data) {
+            if (data && data.name) {
+              $('#usuario').text(data.name);
+            }
+          });
+
         $('form').submit(function(){
-            var nombreTxt = $('#nombre').val() || "Anomimo";
             var mensajeTxt = $('#m').val();
 
             if (colorHexTxt == "") {
                 colorHexTxt = getRandomColor();
             }
 
-            var jsonMsg = { nombre: nombreTxt, mensaje: mensajeTxt, color: colorHexTxt };
+            var jsonMsg = { nombre: '', mensaje: mensajeTxt, color: colorHexTxt };
             socket.emit('Evento-Mensaje-Server', JSON.stringify(jsonMsg));
             $('#m').val('');
             return false;
         });
 
-        // ... (resto del código) ...
-
         socket.on('Evento-Mensaje-Server', function(msg){
             var msgJson = JSON.parse(msg);
-            var mensajeDisplay = "<b style='color:"+ msgJson.color +"'>" + msgJson.nombre + "</b>: " + msgJson.mensaje;
-            $('#messages').append($('<li>').html(mensajeDisplay));
-            window.scrollTo(0, document.body.scrollHeight);
+            appendMessage(msgJson);
+        });
+
+        socket.on('connect_error', function () {
+            window.location = '/login';
         });
 
       });

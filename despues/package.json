@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "dotenv": "^18.0.9",
     "express": "*",
+    "express-openid-connect": "^2.20.2",
     "mocha": "^10.2.0",
     "socket.io": "*"
   },
